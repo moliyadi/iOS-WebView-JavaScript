@@ -8,6 +8,8 @@
 
 #import "JSCallOCViewController.h"
 #import "SecondViewController.h"
+#import "MBvlcPlaybackController.h"
+
 @interface JSCallOCViewController ()
 
 @end
@@ -84,6 +86,25 @@
     {
         NSLog(@"%@ %@ %@",a,b,c);
     };
+    
+    //mabiao test vlcPlaybackVC
+    self.context[@"iOSThirdPartyPlayer"] =
+    ^(NSString *movieTitle, NSString *playUrl)
+    {
+        MBvlcPlaybackController *vlcPlaybackVC = [[MBvlcPlaybackController alloc] init];
+        [vlcPlaybackVC setStrPlayUrl:playUrl];
+        [vlcPlaybackVC setStrMovieName:movieTitle];
+        
+        //当前线程非主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf presentViewController:vlcPlaybackVC animated:YES completion:^{
+                //
+                
+            }];
+        });
+        
+    };
+    
     
 }
 
